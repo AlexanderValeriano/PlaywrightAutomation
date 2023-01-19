@@ -1,0 +1,21 @@
+{
+  "name": "playwrightautomation",
+  "version": "1.0.0",
+  "description": "insertion alexander hello world # PlaywrightAutomation FOR BEGINNERS",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderValeriano/PlaywrightAutomation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderValeriano/PlaywrightAutomation/issues"
+  },
+  "homepage": "https://github.com/AlexanderValeriano/PlaywrightAutomation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.29.2"
+  }
+}
