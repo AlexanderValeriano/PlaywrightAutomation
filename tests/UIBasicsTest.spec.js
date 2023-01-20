@@ -22,12 +22,7 @@ test("Browser Context Playwright Test", async ({ browser }) => {
   //type - fill
   await userName.fill("");
   await userName.fill("rahulshettyacademy");
-  await Promise.all(
-    [
-        page.waitForNavigation(), 
-        signIn.click()
-    ]
-    );
+  await Promise.all([page.waitForNavigation(), signIn.click()]);
 
   //   console.log(await cardTitles.first().textContent());
   //   console.log(await cardTitles.nth(1).textContent());
@@ -35,9 +30,21 @@ test("Browser Context Playwright Test", async ({ browser }) => {
   console.log(allTitles);
 });
 
-test("Page Playwright Test", async ({ page }) => {
-  await page.goto("https://www.google.com");
-  // get title assertion
-  console.log(await page.title());
-  await expect(page).toHaveTitle("Google");
+// test("Page Playwright Test", async ({ page }) => {
+//   await page.goto("https://www.google.com");
+//   // get title assertion
+//   console.log(await page.title());
+//   await expect(page).toHaveTitle("Google");
+// });
+
+test.only("UI controls", async ({ page }) => {
+  await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+  const userName = page.locator("#userName");
+  const signIn = page.locator("#signInBtn");
+  const dropdown = page.locator("select.form-control");
+  await dropdown.selectOption("consult");
+  await page.locator(".radiotextsty").last().click();
+  await page.locator("#okayBtn").click();
+  // assertion
+  await page.pause();
 });
