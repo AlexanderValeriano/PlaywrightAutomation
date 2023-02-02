@@ -37,7 +37,7 @@ test("Browser Context Playwright Test", async ({ browser }) => {
 //   await expect(page).toHaveTitle("Google");
 // });
 
-test.only("UI controls", async ({ page }) => {
+test("UI controls", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
   const userName = page.locator("#username");
   const signIn = page.locator("#signInBtn");
@@ -66,6 +66,8 @@ test.only("Child windows handling", async ({ browser }) => {
   const documentLink = page.locator("[href*='documents-request']");
 
   // It returs in form of array mayve not just one page but 2 or more pages will be return
+  //Playwright inspector and how debug playwright script
+  //npx playwright test tests/UIBasicsTest.spec.js --debug
   const [newPage] = await Promise.all([
     context.waitForEvent("page"),
     documentLink.click(),
