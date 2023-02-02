@@ -81,10 +81,9 @@ test("Child windows handling", async ({ browser }) => {
   await page.pause();
   console.log(await page.locator("#username").textContent());
 });
-
 // RECORDING
 // npx playwright codegen http://google.com
-test.only("test", async ({ page }) => {
+test("test", async ({ page }) => {
   await page.goto("https://www.google.com/?gws_rd=ssl");
   await page.getByRole("button", { name: "Tout accepter" }).click();
   await page.getByRole("combobox", { name: "Rech." }).click();
