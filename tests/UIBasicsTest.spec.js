@@ -1,3 +1,4 @@
+// Comment from GITHUB for a pull request
 const { test, expect } = require("@playwright/test");
 const { use } = require("../playwright.config");
 
