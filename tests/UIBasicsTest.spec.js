@@ -99,3 +99,26 @@ test("test", async ({ page }) => {
     .getByRole("link", { name: "Courses" })
     .click();
 });
+
+test.only("Client App login", async ({ page }) => {
+  const productName = "IPHONE 13 PRO";
+  const products = page.locator(".card-body");
+  await page.goto("https://rahulshettyacademy.com/client");
+  await page.locator("#userEmail").fill("valerianoalexander@gmail.com");
+  await page.locator("#userPassword").type("Petit_22$");
+  await page.locator("[value='Login']").click();
+  await page.waitForLoadState("networkidle");
+  const titles = await page.locator(".card-body b").allTextContents();
+  console.log(titles);
+  const count = await products.count();
+  for (let index = 0; index < count; index++) {
+    if (
+      (await products.nth(index).locator("b").textContent()) === productName
+    ) {
+      // add to cart
+      await products.nth(index).locator("text= Add To Cart").click();
+      break;
+    }
+  }
+});
+// ZARA COAT 4
