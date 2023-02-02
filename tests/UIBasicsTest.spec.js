@@ -39,7 +39,7 @@ test("Browser Context Playwright Test", async ({ browser }) => {
 
 test.only("UI controls", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
-  const userName = page.locator("#userName");
+  const userName = page.locator("#username");
   const signIn = page.locator("#signInBtn");
   const documentLink = page.locator("[href*='documents-request']");
   const dropdown = page.locator("select.form-control");
@@ -55,4 +55,26 @@ test.only("UI controls", async ({ page }) => {
   expect(await page.locator("#terms").isChecked()).toBeFalsy();
   // // await page.pause();
   await expect(documentLink).toHaveAttribute("class", "blinkingText");
+});
+
+test.only("Child windows handling", async ({ browser }) => {
+  const context = await browser.newContext();
+
+  const page = await context.newPage();
+  const userName = page.locator("#username");
+  await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+  const documentLink = page.locator("[href*='documents-request']");
+
+  // It returs in form of array mayve not just one page but 2 or more pages will be return
+  const [newPage] = await Promise.all([
+    context.waitForEvent("page"),
+    documentLink.click(),
+  ]);
+  let text = await newPage.locator(".red").textContent();
+  const arrayText = text.split("@");
+  const domain = arrayText[1].split(" ")[0];
+  console.log(domain);
+  await page.locator("#username").type(domain);
+  await page.pause();
+  console.log(await page.locator("#username").textContent());
 });
