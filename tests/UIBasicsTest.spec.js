@@ -57,7 +57,7 @@ test("UI controls", async ({ page }) => {
   await expect(documentLink).toHaveAttribute("class", "blinkingText");
 });
 
-test.only("Child windows handling", async ({ browser }) => {
+test("Child windows handling", async ({ browser }) => {
   const context = await browser.newContext();
 
   const page = await context.newPage();
@@ -79,4 +79,23 @@ test.only("Child windows handling", async ({ browser }) => {
   await page.locator("#username").type(domain);
   await page.pause();
   console.log(await page.locator("#username").textContent());
+});
+
+// RECORDING
+// npx playwright codegen http://google.com
+test.only("test", async ({ page }) => {
+  await page.goto("https://www.google.com/?gws_rd=ssl");
+  await page.getByRole("button", { name: "Tout accepter" }).click();
+  await page.getByRole("combobox", { name: "Rech." }).click();
+  await page.getByRole("combobox", { name: "Rech." }).fill("rahul shetty");
+  await page.getByRole("combobox", { name: "Rech." }).press("Enter");
+  await page
+    .getByRole("link", {
+      name: "Rahul Shetty Academy: Selenium, API Testing, Software ... https://rahulshettyacademy.com",
+    })
+    .click();
+  await page
+    .getByRole("navigation")
+    .getByRole("link", { name: "Courses" })
+    .click();
 });
