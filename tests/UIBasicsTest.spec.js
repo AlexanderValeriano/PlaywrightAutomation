@@ -101,7 +101,7 @@ test("test", async ({ page }) => {
 });
 
 test.only("Client App login", async ({ page }) => {
-  const productName = "IPHONE 13 PRO";
+  const productName = "zara coat 3";
   const products = page.locator(".card-body");
   await page.goto("https://rahulshettyacademy.com/client");
   await page.locator("#userEmail").fill("valerianoalexander@gmail.com");
@@ -120,5 +120,9 @@ test.only("Client App login", async ({ page }) => {
       break;
     }
   }
+  // await page.pause();
+  await page.locator("[routerlink*='cart']").click();
+  await page.locator("div li").first().waitFor(); // method for wait 30 seconds for this element
+  const bool = await page.locator("h3:has-text('zara coat 3')").isVisible();
+  expect(bool).toBeTruthy();
 });
-// ZARA COAT 4
