@@ -125,4 +125,19 @@ test.only("Client App login", async ({ page }) => {
   await page.locator("div li").first().waitFor(); // method for wait 30 seconds for this element
   const bool = await page.locator("h3:has-text('zara coat 3')").isVisible();
   expect(bool).toBeTruthy();
+  await page.locator("text=Checkout").click();
+  await page.locator("[placeholder*='Country']").type("ind", { delay: 100 });
+  const dropdown = page.locator(".ta-results");
+  await dropdown.waitFor();
+  let optionsCount = await dropdown.locator("button").count();
+  for (let i = 0; i < optionsCount; ++i) {
+    let text = await dropdown.locator("button").nth(i).textContent();
+
+    // text.trim() or text.includes("India") two solutions to match the result search
+    if (text === " India") {
+      await dropdown.locator("button").nth(i).click();
+      break;
+    }
+  }
+  await page.pause();
 });
