@@ -101,10 +101,11 @@ test("test", async ({ page }) => {
 });
 
 test.only("Client App login", async ({ page }) => {
+  const email = "valerianoalexander@gmail.com";
   const productName = "zara coat 3";
   const products = page.locator(".card-body");
   await page.goto("https://rahulshettyacademy.com/client");
-  await page.locator("#userEmail").fill("valerianoalexander@gmail.com");
+  await page.locator("#userEmail").fill(email);
   await page.locator("#userPassword").type("Petit_22$");
   await page.locator("[value='Login']").click();
   await page.waitForLoadState("networkidle");
@@ -139,5 +140,15 @@ test.only("Client App login", async ({ page }) => {
       break;
     }
   }
-  await page.pause();
+  // Use assertion
+  await expect(page.locator(".user__name [style*='color']")).toHaveText(email);
+  await page.locator(".action__submit").click();
+  await expect(page.locator(".hero-primary")).toHaveText(
+    " Thankyou for the order. "
+  );
+  const orderId = await page
+    .locator(".em-spacer-1 .ng-star-inserted")
+    .textContent();
+  console.log(orderId);
+  // await page.pause();
 });
