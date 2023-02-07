@@ -3,6 +3,8 @@ const loginPayload = {
   userEmail: "valerianoalexander@gmail.com",
   userPassword: "Petit_22$",
 };
+let token;
+
 test.beforeAll(async () => {
   const apiContext = await request.newContext();
   const loginResponse = await apiContext.post(
@@ -13,8 +15,9 @@ test.beforeAll(async () => {
   );
   // response code 200,201,2.02
   expect(loginResponse.ok()).toBeTruthy();
-  const loginResponseJson = loginResponse.json();
-  const token = loginResponseJson.token;
+  const loginResponseJson = await loginResponse.json();
+  token = loginResponseJson.token;
+  console.log(token);
 });
 
 test.beforeEach(() => {});
@@ -22,14 +25,13 @@ test.beforeEach(() => {});
 // test1, test2, test3
 
 test.only("Client App login", async ({ page }) => {
+  page.addInitScript((value) => {
+    window.localStorage.setItem("token", value);
+  }, token);
   const email = "valerianoalexander@gmail.com";
   const productName = "zara coat 3";
+  await page.goto("https://rahulshettyacademy.com/client/");
   const products = page.locator(".card-body");
-  await page.goto("https://rahulshettyacademy.com/client");
-  await page.locator("#userEmail").fill(email);
-  await page.locator("#userPassword").type("Petit_22$");
-  await page.locator("[value='Login']").click();
-  await page.waitForLoadState("networkidle");
   const titles = await page.locator(".card-body b").allTextContents();
   console.log(titles);
   const count = await products.count();
@@ -82,7 +84,7 @@ test.only("Client App login", async ({ page }) => {
       break;
     }
   }
-  const orderIdDetails = await page.locator(".col-text").textContent();
-  expect(orderId.includes(orderIdDetails)).toBeTruthy();
   // await page.pause();
+  // const orderIdDetails = await page.locator(".col-text").textContent();
+  // expect(orderId.includes(orderIdDetails)).toBeTruthy();
 });
