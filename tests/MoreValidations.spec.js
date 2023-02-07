@@ -9,4 +9,11 @@ test("Popup validations", async ({ page }) => {
   await expect(page.locator("#displayed-text")).toBeVisible();
   await page.locator("#hide-textbox").click();
   await expect(page.locator("#displayed-text")).toBeHidden();
+  // PopUP or Dialog
+  await page.pause();
+  page.on("dialog", (dialog) => dialog.accept());
+  //   page.on("dialog", (dialog) => dialog.dismiss());
+  await page.locator("#confirmbtn").click();
+  // Mouse hover in plywright
+  await page.locator("#mousehover").hover();
 });
