@@ -1,11 +1,16 @@
+// Declare variables
 const { test, expect, request } = require("@playwright/test");
 const loginPayload = {
   userEmail: "valerianoalexander@gmail.com",
   userPassword: "Petit_22$",
 };
+const orderPayLoad = {orders: [{country: "Cuba", productOrderedId: "6262e95ae26b7e1a10e89bf0"}]}
 let token;
+let orderId;
+// ------------//// ------------//// ------------//// ------------//// ------------//// ------------//
 
 test.beforeAll(async () => {
+  // Login API
   const apiContext = await request.newContext();
   const loginResponse = await apiContext.post(
     "https://rahulshettyacademy.com/api/ecom/auth/login",
@@ -18,60 +23,42 @@ test.beforeAll(async () => {
   const loginResponseJson = await loginResponse.json();
   token = loginResponseJson.token;
   console.log(token);
+  //
+  const orderResponse = await apiContext.post("https://www.rahulshettyacademy.com/api/ecom/order/create-order",
+  {
+    data:orderPayLoad,
+    headers:{'Authorization':token,
+    'Content-Type': 'application/json'}
+  })
+  const orderResponseJson = await orderResponse.json();
+  orderId = orderResponseJson.orders[0];
 });
 
 test.beforeEach(() => {});
 
 // test1, test2, test3
 
-test.only("Client App login", async ({ page }) => {
+test("Client App login", async ({ page }) => {
   page.addInitScript((value) => {
     window.localStorage.setItem("token", value);
   }, token);
-  const email = "valerianoalexander@gmail.com";
-  const productName = "zara coat 3";
-  await page.goto("https://rahulshettyacademy.com/client/");
-  const products = page.locator(".card-body");
-  const titles = await page.locator(".card-body b").allTextContents();
-  console.log(titles);
-  const count = await products.count();
-  for (let index = 0; index < count; index++) {
-    if (
-      (await products.nth(index).locator("b").textContent()) === productName
-    ) {
-      // add to cart
-      await products.nth(index).locator("text= Add To Cart").click();
-      break;
-    }
-  }
-  // await page.pause();
-  await page.locator("[routerlink*='cart']").click();
-  await page.locator("div li").first().waitFor(); // method for wait 30 seconds for this element
-  const bool = await page.locator("h3:has-text('zara coat 3')").isVisible();
-  expect(bool).toBeTruthy();
-  await page.locator("text=Checkout").click();
-  await page.locator("[placeholder*='Country']").type("ind", { delay: 100 });
-  const dropdown = page.locator(".ta-results");
-  await dropdown.waitFor();
-  let optionsCount = await dropdown.locator("button").count();
-  for (let i = 0; i < optionsCount; ++i) {
-    let text = await dropdown.locator("button").nth(i).textContent();
 
-    // text.trim() or text.includes("India") two solutions to match the result search
-    if (text === " India") {
-      await dropdown.locator("button").nth(i).click();
-      break;
-    }
-  }
-  // Use assertion
-  await expect(page.locator(".user__name [style*='color']")).toHaveText(email);
-  await page.locator(".action__submit").click();
-  await expect(page.locator(".hero-primary")).toHaveText(
-    " Thankyou for the order. "
-  );
-  const orderId = await page
-    .locator(".em-spacer-1 .ng-star-inserted")
-    .textContent();
+  await page.goto("https://rahulshettyacademy.com/client/");
+  // const products = page.locator(".card-body");
+  // const titles = await page.locator(".card-body b").allTextContents();
+  // console.log(titles);
+  // const count = await products.count();
+  // for (let index = 0; index < count; index++) {
+  //   if (
+  //     (await products.nth(index).locator("b").textContent()) === productName
+  //   ) {
+  //     // add to cart
+  //     await products.nth(index).locator("text= Add To Cart").click();
+  //     break;
+  //   }
+  // }
+
+
   console.log(orderId);
   await page.locator("button[routerlink*='myorders']").click();
   await page.locator("tbody").waitFor();
@@ -84,7 +71,11 @@ test.only("Client App login", async ({ page }) => {
       break;
     }
   }
-  // await page.pause();
-  // const orderIdDetails = await page.locator(".col-text").textContent();
-  // expect(orderId.includes(orderIdDetails)).toBeTruthy();
+  const orderIdDetails = await page.locator(".col-text").textContent();
+  await page.pause();
+  expect(orderId.includes(orderIdDetails)).toBeTruthy();
 });
+
+
+// Verify if order created is showing in history page
+// Precondition - create order 
