@@ -1,5 +1,6 @@
 // Declare variables
 const { test, expect, request } = require("@playwright/test");
+const { APIUtils } = require("./utils/ApiUtils");
 const loginPayload = {
   userEmail: "valerianoalexander@gmail.com",
   userPassword: "Petit_22$",
@@ -12,36 +13,25 @@ let orderId;
 // ------------//// ------------//// ------------//// ------------//// ------------//// ------------//
 
 test.beforeAll(async () => {
-  // Login API
   const apiContext = await request.newContext();
-  const loginResponse = await apiContext.post(
-    "https://rahulshettyacademy.com/api/ecom/auth/login",
-    {
-      data: loginPayload,
-    }
-  );
+  const apiUtils = new APIUtils(apiContext, loginPayload);
+  apiUtils.createOrder(orderPayLoad);
+  // const loginResponse = await apiContext.post(
+  //   "https://rahulshettyacademy.com/api/ecom/auth/login",
+  //   {
+  //     data: loginPayload,
+  //   }
+  // );
   // response code 200,201,2.02
-  expect(loginResponse.ok()).toBeTruthy();
-  const loginResponseJson = await loginResponse.json();
-  token = loginResponseJson.token;
-  // console.log(token);
-  //
-  const orderResponse = await apiContext.post(
-    "https://www.rahulshettyacademy.com/api/ecom/order/create-order",
-    {
-      data: orderPayLoad,
-      headers: { Authorization: token, "Content-Type": "application/json" },
-    }
-  );
-  const orderResponseJson = await orderResponse.json();
-  orderId = orderResponseJson.orders[0];
+  // expect(loginResponse.ok()).toBeTruthy();
+  // const loginResponseJson = await loginResponse.json();
+  // token = loginResponseJson.token;
 });
 
-test.beforeEach(() => {});
-
-// test1, test2, test3
-
-test("Client App login", async ({ page }) => {
+// create order in success
+test("Place the order", async ({ page }) => {
+  const apiUtils = new APIUtils(apiContext, loginPayload);
+  const orderId = createOrder(orderPayLoad);
   page.addInitScript((value) => {
     window.localStorage.setItem("token", value);
   }, token);
@@ -65,19 +55,18 @@ test("Client App login", async ({ page }) => {
   await page.locator("button[routerlink*='myorders']").click();
   await page.locator("tbody").waitFor();
   const rows = await page.locator("tbody tr");
-  
 
-  for (let i = 0; i < await rows.count(); i++) {
+  for (let i = 0; i < (await rows.count()); i++) {
     const rowOrderId = await rows.nth(i).locator("th").textContent();
-   
+
     if (orderId.includes(rowOrderId)) {
       await page.pause();
       await rows.nth(i).locator("button").first().click();
       break;
     }
   }
-   await page.pause();
-   const orderIdDetails = await page.locator(".col-text").textContent();
+  await page.pause();
+  const orderIdDetails = await page.locator(".col-text").textContent();
   expect(orderId.includes(orderIdDetails)).toBeTruthy();
 });
 
