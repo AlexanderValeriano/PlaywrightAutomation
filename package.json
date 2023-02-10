@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "insertion alexander hello world # PlaywrightAutomation FOR BEGINNERS",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test tests/WebAPIPart1.spec.js --headed"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AlexanderValeriano/PlaywrightAutomation.git"

@@ -1,4 +1,6 @@
 // Declare variables
+// CNTRL + sHIFT + p
+// dEBIG MODE vs CODE + CONFIG IN PACKAGE json
 const { test, expect, request } = require("@playwright/test");
 const { APIUtils } = require("./utils/APIUtils");
 const loginPayload = {
