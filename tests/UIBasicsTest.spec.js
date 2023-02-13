@@ -2,14 +2,22 @@
 const { test, expect } = require("@playwright/test");
 const { use } = require("../playwright.config");
 
-test("Browser Context Playwright Test", async ({ browser }) => {
+test.only("Browser Context Playwright Test", async ({ browser }) => {
   //chrome - plugins / cookies;
 
   const context = await browser.newContext();
   const page = await context.newPage();
+  //REGEX
+  //page.route("**/*.{jpg,png,jpeg}", (route) => route.abort());
+  //page.route("**/*.css", (route) => route.abort());
+
   const userName = page.locator("#username");
   const signIn = page.locator("#signInBtn");
   const cardTitles = page.locator(".card-body a");
+  page.on("request", (request) => console.log(request.url()));
+  page.on("response", (response) =>
+    console.log(response.url(), response.status())
+  );
 
   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
   console.log(await page.title());
@@ -100,7 +108,7 @@ test("test", async ({ page }) => {
     .click();
 });
 
-test.only("Client App login", async ({ page }) => {
+test("Client App login", async ({ page }) => {
   const email = "valerianoalexander@gmail.com";
   const productName = "zara coat 3";
   const products = page.locator(".card-body");
