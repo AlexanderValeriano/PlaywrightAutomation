@@ -21,21 +21,10 @@ test("Place the order", async ({ page }) => {
   }, response.token);
 
   await page.goto("https://rahulshettyacademy.com/client/");
-
-  await page.route(
-    "https://www.rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/63ea3273568c3e9fb114aa35",
-    async (route) => {
-      const response = await page.request.fetch(route.request());
-      let body = fakePayLoadOrders;
-      console.log(body);
-      route.fulfill({
-        response,
-        body,
-      });
-      // intercepting response - API response => {playwright fake response } =>  => render data on the front end
-    }
-  );
   await page.locator("button[routerlink*='myorders']").click();
-  //await page.pause();
-  console.log(await page.locator(".mt-4").textContent());
+  await page.route("https://www.rahulshettyacademy.com/api/ecom/order/get-orders-details?id=63ea493f568c3e9fb114c206",
+    route=> route.continue({url: 'https://www.rahulshettyacademy.com/api/ecom/order/get-orders-details?id=63ea33bf568c3e9fb114ab37'})
+  );
+  await page.locator("button:has-text('View')").first().click();
+  await page.pause();
 });
