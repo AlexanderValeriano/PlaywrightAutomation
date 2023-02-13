@@ -4,7 +4,7 @@
   "description": "insertion alexander hello world # PlaywrightAutomation FOR BEGINNERS",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test tests/WebAPIPart1.spec.js --headed"
+    "test": "npx playwright test tests/NetworkTest.spec.js --headed"
   },
   "repository": {
     "type": "git",
