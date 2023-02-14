@@ -14,6 +14,7 @@ test.only("Browser Context Playwright Test", async ({ browser }) => {
   const userName = page.locator("#username");
   const signIn = page.locator("#signInBtn");
   const cardTitles = page.locator(".card-body a");
+  // LISTENERS
   page.on("request", (request) => console.log(request.url()));
   page.on("response", (response) =>
     console.log(response.url(), response.status())
