@@ -1,17 +1,18 @@
 const { test, expect } = require("@playwright/test");
-const { LoginPage } = require("../pageobjects/LoginPage");
+const { POManager } = require("../pageobjects/POmanager");
 const { DashboardPage } = require("../pageobjects/DashboardPage");
 
 test.only("Client App login", async ({ page }) => {
+  const poManager = new POManager(page);
   //js file - Login.js, DashboardPAge
   const username = "valerianoalexander@gmail.com";
   const password = "Petit_22$";
   const productName = "zara coat 3";
   const products = page.locator(".card-body");
-  const loginPage = new LoginPage(page);
+  const loginPage = poManager.getLoginPage();
   await loginPage.goTo();
   await loginPage.validLogin(username, password);
-  const dashboardPage = new DashboardPage(page);
+  const dashboardPage = poManager.getDashboardPage();
   await dashboardPage.searchProductAddCart(productName);
   await dashboardPage.navigateToCart();
   // await page.pause();
