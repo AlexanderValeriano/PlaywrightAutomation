@@ -32,6 +32,7 @@ const config = {
         browserName: "chromium",
         headless: false,
         screenshot: "on",
+        video: "retain-on-failure",
         //SSL Certification and Geolocalisation permission
         ignoreHttpsErrors: true,
         permissions: ["geolocation"],
