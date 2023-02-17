@@ -1,5 +1,8 @@
 const { test, expect } = require("@playwright/test");
-
+// Run in parallel the test cases
+// test.describe.configure({ mode: "parallel" });
+test.describe.configure({ mode: "serial" });
+// interdependency in test serial tests.
 test("Popup validations", async ({ page }) => {
   await page.goto("https://www.rahulshettyacademy.com/AutomationPractice/");
   //   await page.goto("https://www.google.com");
@@ -39,7 +42,7 @@ test("Screen", async ({ page }) => {
 
 //screenshot - store -> screenshot
 
-test.only("visual", async ({ page }) => {
+test("visual", async ({ page }) => {
   // await page.goto("https://www.rediff.com/");
   // await page.goto("https://www.flightaware.com/");
   await page.goto("https://www.google.com/");
