@@ -18,19 +18,26 @@ const config = {
     {
       name: "safari",
       use: {
+        //Ouvrir in responsive iphene 11
         browserName: "webkit",
-        headless: true,
+        headless: false,
         screenshot: "on",
         trace: "on", // on,off or retain-on-failure
+        ...devices["iPhone 11"],
       },
     },
     {
       name: "chrome",
       use: {
-        browserName: "chromiun",
-        headless: true,
+        browserName: "chromium",
+        headless: false,
         screenshot: "on",
+        //SSL Certification and Geolocalisation permission
+        ignoreHttpsErrors: true,
+        permissions: ["geolocation"],
         trace: "on", // on,off or retain-on-failure
+        viewport: { width: 720, height: 720 },
+        // ...devices['Galaxy Note 3']
       },
     },
   ],

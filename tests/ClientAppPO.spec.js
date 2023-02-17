@@ -34,7 +34,7 @@ for (const data of dataset) {
   });
 }
 
-customtest(`Client App login`, async ({ page, testDataForOrder }) => {
+customtest.only(`Client App login`, async ({ page, testDataForOrder }) => {
   const poManager = new POManager(page);
   //js file- Login js, DashboardPage
   const products = page.locator(".card-body");
