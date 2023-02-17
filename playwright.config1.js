@@ -3,6 +3,8 @@ const { devices } = require("@playwright/test");
 
 const config = {
   testDir: "./tests",
+  // glonbal config level retry for ione more time
+  retries: 1,
   /* Maximum time one test can run for. */
   timeout: 100 * 1000,
   expect: {
