@@ -54,3 +54,6 @@ customtest.only(`Client App login`, async ({ page, testDataForOrder }) => {
 });
 //test files will trigger parallel
 //individual tests in the file will run in sequence
+
+// test files will trigger parallel
+// individual tests in the file will run in sequence
