@@ -1,0 +1,11 @@
+Package: allure
+Source: allure
+Version: 2.18.1-1
+Section: java
+Priority: optional
+Architecture: all
+Depends: java8-runtime | java8-runtime-headless | openjdk8-jre-headless | openjdk-8-jre | openjdk-8-jdk | oracle-java8-installer | oracle-java8-installer
+Installed-Size: 21431
+Maintainer: runner
+Description: allure
+ Allure Commandline
