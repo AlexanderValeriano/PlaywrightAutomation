@@ -3,7 +3,8 @@ const { test, expect } = require("@playwright/test");
 // test.describe.configure({ mode: "parallel" });
 test.describe.configure({ mode: "serial" });
 // interdependency in test serial tests.
-test("Popup validations", async ({ page }) => {
+
+test("@Web Popup validations", async ({ page }) => {
   await page.goto("https://www.rahulshettyacademy.com/AutomationPractice/");
   //   await page.goto("https://www.google.com");
   //   await page.goBack();

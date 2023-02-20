@@ -5,9 +5,9 @@ const config = {
   testDir: "./tests",
   // glonbal config level retry for ione more time
   retries: 1,
-  workers: 1, // DISABLE PARALLEL MEchanism 1
+  workers: 5, // DISABLE PARALLEL MEchanism 1
   /* Maximum time one test can run for. */
-  timeout: 100 * 1000,
+  timeout: 30 * 1000,
   expect: {
     timeout: 5000,
   },

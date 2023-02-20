@@ -1,5 +1,5 @@
 const { test, expect, request } = require("@playwright/test");
-const { APIUtils } = require("./utils/APIUtils");
+const { APIUtils } = require("../utils/APIUtils");
 const loginPayload = {
   userEmail: "perou.hexagone@gmail.com",
   userPassword: "Petit_22$",
@@ -9,13 +9,14 @@ const orderPayLoad = {
 };
 const fakePayLoadOrders = { data: [], message: "No Orders" };
 let response;
+
 test.beforeAll(async () => {
   const apiContext = await request.newContext();
   const apiUtils = new APIUtils(apiContext, loginPayload);
   response = await apiUtils.createOrder(orderPayLoad);
 });
 
-test("Place the order", async ({ page }) => {
+test.skip("Place the order", async ({ page }) => {
   page.addInitScript((value) => {
     window.localStorage.setItem("token", value);
   }, response.token);

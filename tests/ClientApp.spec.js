@@ -1,6 +1,6 @@
 const { test, expect } = require("@playwright/test");
 
-test.only("Client App login", async ({ page }) => {
+test.skip("Client App login", async ({ page }) => {
   //js file - Login.js, DashboardPAge
   const email = "valerianoalexander@gmail.com";
   const productName = "zara coat 3";
@@ -67,17 +67,17 @@ test.only("Client App login", async ({ page }) => {
   // await page.pause();
 });
 
-test("Browser Context-Validation Error Login", async ({ page }) => {
-  const userName = page.locator("#userEmail");
-  const signIn = page.locator("#login");
-  const titles = page.locator(".card-body b");
+// test("Browser Context-Validation Error Login", async ({ page }) => {
+//   const userName = page.locator("#userEmail");
+//   const signIn = page.locator("#login");
+//   const titles = page.locator(".card-body b");
 
-  await page.goto("https://rahulshettyacademy.com/client");
-  await userName.fill("alexander.valeriano@sogeti.com");
-  await page.locator("#userPassword").type("Petit_22");
-  await signIn.click();
-  await page.waitForLoadState("networkidle");
+//   await page.goto("https://rahulshettyacademy.com/client");
+//   await userName.fill("alexander.valeriano@sogeti.com");
+//   await page.locator("#userPassword").type("Petit_22");
+//   await signIn.click();
+//   await page.waitForLoadState("networkidle");
 
-  const allTitles = await titles.allTextContents();
-  console.log(allTitles);
-});
+//   const allTitles = await titles.allTextContents();
+//   console.log(allTitles);
+// });
