@@ -1,7 +1,8 @@
 // Comment from GITHUB for a pull request
 const { test, expect } = require("@playwright/test");
 const { use } = require("../playwright.config");
-
+// COMMAND for execute all comand with a TAG
+//npx playwright test --grep @Web
 test("@Web Browser Context Playwright Test", async ({ browser }) => {
   //chrome - plugins / cookies;
 
