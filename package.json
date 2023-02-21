@@ -4,12 +4,11 @@
   "description": "insertion alexander hello world # PlaywrightAutomation FOR BEGINNERS",
   "main": "index.js",
   "scripts": {
-    // npm run webTests 
     "test": "npx playwright test tests/NetworkTest.spec.js --headed",
     "regression": "npx playwright test",
     "webTests": "npx playwright test --grep @Web",
     "APITests": "npx playwright test --grep @API",
-    "SafariNewConfig" : "npx playwright test --config playwright.config1.js --project=safari"
+    "SafariNewConfig": "npx playwright test --config playwright.config1.js --project=safari"
   },
   "repository": {
     "type": "git",
