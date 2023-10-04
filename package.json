@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/AlexanderValeriano/PlaywrightAutomation#readme",
   "devDependencies": {
-    "@playwright/test": "^1.30.0",
+    "@playwright/test": "^1.38.1",
     "allure-playwright": "^2.0.0"
   }
 }
